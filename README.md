@@ -8,4 +8,4 @@ Delete nasty eval'ed base64 code from your files. Often found in infected Wordpr
 - `php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"`
 - `php composer-setup.php`
 - `php composer.phar install`
-- `./unhack <directory> [-e <excluded files>]
+- Example: `./unhack ../public_html -e jpg`
