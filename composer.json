@@ -16,7 +16,7 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "symfony/console": "^4.2@dev"
+    "symfony/console": "^3.4"
   },
   "bin": ["unhack"]
 }
