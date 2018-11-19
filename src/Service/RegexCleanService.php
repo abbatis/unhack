@@ -23,7 +23,7 @@ class RegexCleanService
 
         foreach ($files as $file) {
             $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
-            if (in_array($fileExtension, $input->getOption('exclude'))) {
+            if (in_array(strtolower($fileExtension), $input->getOption('exclude'))) {
                 continue;
             }
 
