@@ -20,7 +20,7 @@ try {
         ->addArgument('directory', InputArgument::REQUIRED, 'The directory to search in.')
         ->addOption('exclude', 'e', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY)
         ->setCode(function (InputInterface $input, OutputInterface $output) {
-            $output->writeln('Starting unhack script...');
+            $output->writeln('Starting unhack script. Checking files for malicious patterns.');
             $service = new \Abbatis\Unhack\Service\RegexCleanService();
             $service->clean($input->getArgument('directory'), $output, $input);
         })

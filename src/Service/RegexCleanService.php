@@ -27,10 +27,11 @@ class RegexCleanService
                 continue;
             }
 
+            $output->writeln("- $file");
+
             foreach ($patterns as $pattern) {
                 $fileContent = file_get_contents($file);
                 $fileContent = preg_replace("/{$pattern}/", "", $fileContent);
-                $output->writeln($pattern." ".$file);
                 file_put_contents($file, trim($fileContent));
             }
         }
