@@ -23,16 +23,19 @@ class RegexCleanService
 
         foreach ($files as $file) {
             $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+
             if (in_array(strtolower($fileExtension), $input->getOption('exclude'))) {
                 continue;
             }
 
-            $output->writeln("- $file");
-
             foreach ($patterns as $pattern) {
+                $pattern = "/{$pattern}/";
                 $fileContent = file_get_contents($file);
-                $fileContent = preg_replace("/{$pattern}/", "", $fileContent);
-                file_put_contents($file, trim($fileContent));
+                if (preg_match($pattern, $fileContent)) {
+                    $output->writeln("X {$file} ({$pattern})");
+                    $fileContent = preg_replace($pattern, "", $fileContent);
+                    file_put_contents($file, trim($fileContent));
+                }
             }
         }
     }
