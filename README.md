@@ -1,5 +1,5 @@
 # ./unhack
-Delete nasty eval'ed base64 code from your files
+Delete nasty eval'ed base64 code from your files. Often found in infected Wordpress/Magento installations.
 
 ## Usage
 - Back-up your files before using this
