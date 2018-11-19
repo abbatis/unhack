@@ -2,6 +2,7 @@
 
 namespace Abbatis\Unhack\Service;
 
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -13,13 +14,19 @@ class RegexCleanService
     /**
      * @param string                                            $dir
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      */
-    public function clean($dir, OutputInterface $output)
+    public function clean($dir, OutputInterface $output, InputInterface $input)
     {
         $files = $this->getDirContents($dir);
         $patterns = $this->getPatterns();
 
         foreach ($files as $file) {
+            $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+            if (in_array($fileExtension, $input->getOption('exclude'))) {
+                continue;
+            }
+
             foreach ($patterns as $pattern) {
                 $fileContent = file_get_contents($file);
                 $fileContent = preg_replace("/{$pattern}/", "", $fileContent);

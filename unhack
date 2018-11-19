@@ -11,16 +11,18 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 try {
     (new Application('clean', '1.0.0'))
         ->register('clean')
         ->addArgument('directory', InputArgument::REQUIRED, 'The directory to search in.')
+        ->addOption('exclude', 'e', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY)
         ->setCode(function (InputInterface $input, OutputInterface $output) {
             $output->writeln('Starting unhack script...');
             $service = new \Abbatis\Unhack\Service\RegexCleanService();
-            $service->clean($input->getArgument('directory'), $output);
+            $service->clean($input->getArgument('directory'), $output, $input);
         })
         ->getApplication()
         ->setDefaultCommand('clean', true)
