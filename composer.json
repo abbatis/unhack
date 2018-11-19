@@ -1,0 +1,22 @@
+{
+  "name": "abbatis/unhack",
+  "description": "Unhack most types of web-apps.",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Imad",
+      "email": "i.kada@abbatis.nl"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Abbatis\\Unhack\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "symfony/console": "^4.2@dev"
+  },
+  "bin": ["unhack"]
+}
