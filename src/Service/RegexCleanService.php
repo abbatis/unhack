@@ -29,12 +29,10 @@ class RegexCleanService
             }
 
             foreach ($patterns as $pattern) {
-                $pattern = "/{$pattern}/";
-                $fileContent = file_get_contents($file);
-                if (preg_match($pattern, $fileContent)) {
-                    $output->writeln("X {$file} ({$pattern})");
-                    $fileContent = preg_replace($pattern, "", $fileContent);
-                    file_put_contents($file, trim($fileContent));
+                try {
+                    $this->removeMaliciousStrings($output, $pattern, $file);
+                } catch (\Exception $e) {
+                    $output->writeln("<error>$pattern - $file : {$e->getMessage()}</error>");
                 }
             }
         }
@@ -80,5 +78,21 @@ class RegexCleanService
         }
 
         return $results;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string                                            $pattern
+     * @param string                                            $file
+     */
+    protected function removeMaliciousStrings(OutputInterface $output, $pattern, $file)
+    {
+        $pattern = "/{$pattern}/";
+        $fileContent = file_get_contents($file);
+        if (preg_match($pattern, $fileContent)) {
+            $output->writeln("X {$file} ({$pattern})");
+            $fileContent = preg_replace($pattern, "", $fileContent);
+            file_put_contents($file, trim($fileContent));
+        }
     }
 }
